@@ -2,15 +2,18 @@
 
 
 const io=require('socket.io')(3000)
+const express=require("express");
+const app=express();
+let cors = require("cors");
+app.use(cors());
 
 const users={};
 
-// let cors = require("cors");
-// app.use(cors());
 
-io.on('connection',socket=>{
-    socket.on('new-user-joined',name=>{
-         console.log(name);
+
+io.on('connection',socket =>{
+    socket.on('new-user-joined',name =>{
+         console.log("new user joined",name);
          users[socket.id]=name;
          socket.broadcast.emit('user-joined', name)
     });
